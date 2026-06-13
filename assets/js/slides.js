@@ -180,7 +180,7 @@ const SLIDES = [
     {badges:["Cement Kiln","Power Plant","Glass Kiln","Waste Incinerator"]}
   ],
   side:[
-    {fig:{src:IMG+"image15.png", ar:"16/10", cap:"Metal membrane element for hot-gas filtration"}},
+    {fig:{src:IMG+"image15.jpg", ar:"16/10", cap:"Metal membrane element for hot-gas filtration"}},
     {stats:[ {n:"450",u:"°C",l:"Max Temperature"},{n:"99.9",u:"%",l:"Efficiency"} ], cls:"c2"}
   ]},
 
@@ -199,7 +199,7 @@ const SLIDES = [
     {list:["Sub-micron particle capture","Mercury & heavy-metal removal","Dioxin & furan reduction","Enhanced SO₂ capture with sorbents"]}
   ],
   side:[
-    {fig:{src:IMG+"image17.jpeg", ar:"16/10", cap:"Multi-layer filtration mechanism"}},
+    {diagram:"filtration", cap:"Outside-to-inside filtration — dust cake builds on the media surface"},
     {stats:[ {n:"99.99",u:"%",l:"PM Collection"},{p:"<",n:"5",u:" mg/Nm³",l:"PM Emission"},
              {p:">",n:"95",u:"%",l:"Heavy Metals"},{p:">",n:"99",u:"%",l:"Dioxins"} ], cls:"c2"}
   ]},
@@ -226,7 +226,7 @@ const SLIDES = [
     {specs:[["Polyester","Max 130°C · general use"],["PPS","Max 190°C · chemical resistant"],["PTFE","Max 260°C · extreme conditions"],["Fiberglass","Max 280°C · high temperature"]]}
   ],
   side:[
-    {figs:{srcs:[IMG+"image18.jpeg",IMG+"image19.jpeg"], cols:2, ar:"4/3"}},
+    {figs:{srcs:[IMG+"bag_fiberglass.jpg",IMG+"bag_pps.jpg"], cols:2, ar:"3/4"}},
     {stats:[ {n:"200",u:"K",l:"Filter tubes / year capacity"} ], cls:"c1"}
   ]},
 
@@ -246,7 +246,7 @@ const SLIDES = [
     {badges:["Autel","ASCO","Goyen","CE","NEMA","GOST"]}
   ],
   side:[
-    {fig:{src:IMG+"image20.jpg", ar:"3/4", cap:"PLC control panel with HMI interface"}}
+    {fig:{src:IMG+"image20.jpg", ar:"1/1", cap:"PLC control panel with HMI interface"}}
   ]},
 
 /* 20 — CHAPTER 05 */
@@ -335,7 +335,7 @@ const SLIDES = [
     ], cls:"c3"}
   ],
   side:[
-    {fig:{src:IMG+"image27.png", ar:"16/10", cap:"Field service & maintenance team"}},
+    {fig:{src:IMG+"image27.jpg", ar:"16/10", cap:"Field service & maintenance team"}},
     {note:["Advanced Capabilities","In-house CFD & physical flow modeling, performance optimization, compliance testing — backed by a 24/7 emergency-response team."]}
   ]},
 
@@ -357,15 +357,39 @@ const SLIDES = [
 { type:"content", kicker:"Service & Support", title:"ESP to FF Conversion", chip:"Service & Support",
   layout:"r5545",
   main:[
-    {lead:["Conversion Solutions",[
-      "When regulations tighten or capacity must grow, existing Electrostatic Precipitators can be converted by replacing internals with a fabric filter arrangement.",
-      "Reusing casing, hoppers, structure and ash handling means substantial savings in cost and footprint with minimum downtime."]]},
-    {listTitle:"Performance Improvement"},
-    {list:["Emission reduction: 50–90%","Heavy-metal capture capability","Dioxin removal efficiency","Reduced power consumption"]}
+    {lead:["Convert, Don't Rebuild",[
+      "When regulations tighten or capacity must grow, an existing Electrostatic Precipitator (ESP) can be converted to a fabric filter — reusing the old casing, hoppers, supports and dust-conveying system.",
+      "DAT and our Dingjie workshop have delivered many ESP conversions in China and overseas, on supply-only (EP) or full turnkey (EPC) basis."]]},
+    {cardsTitle:"Basic Design Ideas"},
+    {cards:[
+      ["Low Capital Cost","Reuse old casing, hoppers & dust-conveying systems — minimal new structure."],
+      ["Tailored Each Case","Every ESP is studied thoroughly to best serve the plant's specific needs."],
+      ["Higher Kiln Output","Low, stable filter ΔP and reliable performance lift kiln production."]
+    ], cls:"c3"}
   ],
   side:[
-    {figs:{srcs:[IMG+"image28.jpg",IMG+"image29.jpg"], cols:2, ar:"4/3"}},
-    {stats:[ {n:"15",u:"+",l:"Successful conversions completed"} ], cls:"c1"}
+    {beforeAfter:{before:IMG+"esp_old.jpg", after:IMG+"esp_new.jpg",
+      bl:"Before — old ESP", al:"After — heat exchanger + bag filter"}},
+    {stats:[ {p:"<",n:"30",u:" mg/Nm³",l:"Emission after conversion"},{n:"15",u:"+",l:"Conversions delivered"} ], cls:"c2"}
+  ]},
+
+/* 30 — ESP CONVERSION · PROCESS & RESULTS */
+{ type:"content", kicker:"Service & Support", title:"Conversion · Process & Results", chip:"Service & Support",
+  layout:"rows",
+  rows:[
+    {steps:[
+      ["1","Preliminary Study","1–2 weeks. Review old-ESP & new-filter data and casing drawings; DAT issues a preliminary GA layout."],
+      ["2","Engineering","Kick-off & site survey, then 6–8 weeks of detailed engineering for final fabrication."],
+      ["3","Fabrication","10–12 weeks workshop fabrication, plus transport to site (location-dependent)."],
+      ["4","Erection","Pre-assembly on site, then the tie-in completed within a 3–4 week kiln shut-down."],
+      ["5","Commissioning","1–2 weeks after kiln re-start — DAT supervises start-up to guaranteed performance."]
+    ]},
+    {split:true, ratio:"r6040", gap:"34px", cols:[
+      [ {label:"Case Reference · Lafarge (clinker cooler / kiln + raw mill)"},
+        {stats:[ {n:"230→<30",u:" mg/Nm³",l:"Emission reduced"},{n:"30→8",u:" /yr",l:"Annual shutdowns"},
+                 {n:"8",u:" mo",l:"Project payback"},{n:"16",u:" days",l:"Shut-down to start-up"} ], cls:"c2 sm"} ],
+      [ {fig:{src:IMG+"esp_erect.jpg", ar:"5/4", cap:"On-site erection during kiln shut-down"}} ]
+    ]}
   ]},
 
 /* 30 — MANUFACTURING */

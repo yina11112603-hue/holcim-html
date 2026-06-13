@@ -4,9 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>De-AirTech · Fabric Filter Solutions</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="assets/fonts/fonts.css" rel="stylesheet" />
 <style>
 /* ============ RESET & TOKENS ============ */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -17,8 +15,8 @@
   --ink:#e8eaed; --ink-soft:#c2cad1; --muted:#8e99a4; --slate:#4a5c6a;
   --line:rgba(200,162,101,.22); --line-soft:rgba(255,255,255,.08);
   --good:#7fb98a;
-  --font:"Sora","Noto Sans SC",system-ui,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
-  --cjk:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --font:"Sora",system-ui,"Segoe UI","PingFang SC","Microsoft YaHei","Microsoft YaHei UI",sans-serif;
+  --cjk:"PingFang SC","Microsoft YaHei","Microsoft YaHei UI",sans-serif;
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--font);
@@ -166,6 +164,20 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--fo
   color:var(--ink-soft);background:linear-gradient(transparent,rgba(16,19,23,.94))}
 .figure.contain{background:#eef0f2}
 .figure.contain img{object-fit:contain;padding:6px}
+.figure.diagram{background:#14171b}
+.figure.diagram svg{width:100%;height:100%;display:block}
+
+/* before / after */
+.bafter{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}
+.bafter .figure{margin:0}
+.bafter .baarrow{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  color:var(--bg);background:linear-gradient(150deg,var(--gold-lt),var(--gold-dk));
+  box-shadow:0 8px 20px -6px rgba(200,162,101,.55)}
+.bafter .baarrow svg{width:20px;height:20px}
+.batag{position:absolute;left:10px;bottom:10px;font-size:13px;font-weight:600;color:#fff;
+  padding:4px 11px;border-radius:20px;backdrop-filter:blur(4px)}
+.batag.old{background:rgba(74,92,106,.85)}
+.batag.new{background:rgba(127,185,138,.9);color:#10241a}
 
 /* ============ COVER ============ */
 .cover{padding:0;justify-content:flex-end}
@@ -525,7 +537,7 @@ const SLIDES = [
     {badges:["Cement Kiln","Power Plant","Glass Kiln","Waste Incinerator"]}
   ],
   side:[
-    {fig:{src:IMG+"image15.png", ar:"16/10", cap:"Metal membrane element for hot-gas filtration"}},
+    {fig:{src:IMG+"image15.jpg", ar:"16/10", cap:"Metal membrane element for hot-gas filtration"}},
     {stats:[ {n:"450",u:"°C",l:"Max Temperature"},{n:"99.9",u:"%",l:"Efficiency"} ], cls:"c2"}
   ]},
 
@@ -544,7 +556,7 @@ const SLIDES = [
     {list:["Sub-micron particle capture","Mercury & heavy-metal removal","Dioxin & furan reduction","Enhanced SO₂ capture with sorbents"]}
   ],
   side:[
-    {fig:{src:IMG+"image17.jpeg", ar:"16/10", cap:"Multi-layer filtration mechanism"}},
+    {diagram:"filtration", cap:"Outside-to-inside filtration — dust cake builds on the media surface"},
     {stats:[ {n:"99.99",u:"%",l:"PM Collection"},{p:"<",n:"5",u:" mg/Nm³",l:"PM Emission"},
              {p:">",n:"95",u:"%",l:"Heavy Metals"},{p:">",n:"99",u:"%",l:"Dioxins"} ], cls:"c2"}
   ]},
@@ -571,7 +583,7 @@ const SLIDES = [
     {specs:[["Polyester","Max 130°C · general use"],["PPS","Max 190°C · chemical resistant"],["PTFE","Max 260°C · extreme conditions"],["Fiberglass","Max 280°C · high temperature"]]}
   ],
   side:[
-    {figs:{srcs:[IMG+"image18.jpeg",IMG+"image19.jpeg"], cols:2, ar:"4/3"}},
+    {figs:{srcs:[IMG+"bag_fiberglass.jpg",IMG+"bag_pps.jpg"], cols:2, ar:"3/4"}},
     {stats:[ {n:"200",u:"K",l:"Filter tubes / year capacity"} ], cls:"c1"}
   ]},
 
@@ -591,7 +603,7 @@ const SLIDES = [
     {badges:["Autel","ASCO","Goyen","CE","NEMA","GOST"]}
   ],
   side:[
-    {fig:{src:IMG+"image20.jpg", ar:"3/4", cap:"PLC control panel with HMI interface"}}
+    {fig:{src:IMG+"image20.jpg", ar:"1/1", cap:"PLC control panel with HMI interface"}}
   ]},
 
 /* 20 — CHAPTER 05 */
@@ -680,7 +692,7 @@ const SLIDES = [
     ], cls:"c3"}
   ],
   side:[
-    {fig:{src:IMG+"image27.png", ar:"16/10", cap:"Field service & maintenance team"}},
+    {fig:{src:IMG+"image27.jpg", ar:"16/10", cap:"Field service & maintenance team"}},
     {note:["Advanced Capabilities","In-house CFD & physical flow modeling, performance optimization, compliance testing — backed by a 24/7 emergency-response team."]}
   ]},
 
@@ -702,15 +714,39 @@ const SLIDES = [
 { type:"content", kicker:"Service & Support", title:"ESP to FF Conversion", chip:"Service & Support",
   layout:"r5545",
   main:[
-    {lead:["Conversion Solutions",[
-      "When regulations tighten or capacity must grow, existing Electrostatic Precipitators can be converted by replacing internals with a fabric filter arrangement.",
-      "Reusing casing, hoppers, structure and ash handling means substantial savings in cost and footprint with minimum downtime."]]},
-    {listTitle:"Performance Improvement"},
-    {list:["Emission reduction: 50–90%","Heavy-metal capture capability","Dioxin removal efficiency","Reduced power consumption"]}
+    {lead:["Convert, Don't Rebuild",[
+      "When regulations tighten or capacity must grow, an existing Electrostatic Precipitator (ESP) can be converted to a fabric filter — reusing the old casing, hoppers, supports and dust-conveying system.",
+      "DAT and our Dingjie workshop have delivered many ESP conversions in China and overseas, on supply-only (EP) or full turnkey (EPC) basis."]]},
+    {cardsTitle:"Basic Design Ideas"},
+    {cards:[
+      ["Low Capital Cost","Reuse old casing, hoppers & dust-conveying systems — minimal new structure."],
+      ["Tailored Each Case","Every ESP is studied thoroughly to best serve the plant's specific needs."],
+      ["Higher Kiln Output","Low, stable filter ΔP and reliable performance lift kiln production."]
+    ], cls:"c3"}
   ],
   side:[
-    {figs:{srcs:[IMG+"image28.jpg",IMG+"image29.jpg"], cols:2, ar:"4/3"}},
-    {stats:[ {n:"15",u:"+",l:"Successful conversions completed"} ], cls:"c1"}
+    {beforeAfter:{before:IMG+"esp_old.jpg", after:IMG+"esp_new.jpg",
+      bl:"Before — old ESP", al:"After — heat exchanger + bag filter"}},
+    {stats:[ {p:"<",n:"30",u:" mg/Nm³",l:"Emission after conversion"},{n:"15",u:"+",l:"Conversions delivered"} ], cls:"c2"}
+  ]},
+
+/* 30 — ESP CONVERSION · PROCESS & RESULTS */
+{ type:"content", kicker:"Service & Support", title:"Conversion · Process & Results", chip:"Service & Support",
+  layout:"rows",
+  rows:[
+    {steps:[
+      ["1","Preliminary Study","1–2 weeks. Review old-ESP & new-filter data and casing drawings; DAT issues a preliminary GA layout."],
+      ["2","Engineering","Kick-off & site survey, then 6–8 weeks of detailed engineering for final fabrication."],
+      ["3","Fabrication","10–12 weeks workshop fabrication, plus transport to site (location-dependent)."],
+      ["4","Erection","Pre-assembly on site, then the tie-in completed within a 3–4 week kiln shut-down."],
+      ["5","Commissioning","1–2 weeks after kiln re-start — DAT supervises start-up to guaranteed performance."]
+    ]},
+    {split:true, ratio:"r6040", gap:"34px", cols:[
+      [ {label:"Case Reference · Lafarge (clinker cooler / kiln + raw mill)"},
+        {stats:[ {n:"230→<30",u:" mg/Nm³",l:"Emission reduced"},{n:"30→8",u:" /yr",l:"Annual shutdowns"},
+                 {n:"8",u:" mo",l:"Project payback"},{n:"16",u:" days",l:"Shut-down to start-up"} ], cls:"c2 sm"} ],
+      [ {fig:{src:IMG+"esp_erect.jpg", ar:"5/4", cap:"On-site erection during kiln shut-down"}} ]
+    ]}
   ]},
 
 /* 30 — MANUFACTURING */
@@ -777,6 +813,50 @@ const SLIDES = [
 
   var REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var DUR = REDUCE ? 0.001 : 1;
+
+  /* ---------- inline SVG diagrams (on-brand, vector) ---------- */
+  var DIAGRAMS = {
+    // Multi-layer filtration mechanism: dirty gas → dust cake → media layers → clean gas
+    filtration: function(){
+      var dots="";
+      for(var i=0;i<26;i++){
+        var cy=44+((i*53)%430), cx=70+((i*37)%150), r=2+(i%3);
+        dots+='<circle class="dg-dust" cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#c8a265" opacity="'+(0.5+(i%4)*0.12)+'"/>';
+      }
+      var arrowsIn="", arrowsOut="";
+      for(var a=0;a<5;a++){ var y=70+a*92;
+        arrowsIn +='<g class="dg-arrow-in" opacity="0.9"><line x1="30" y1="'+y+'" x2="250" y2="'+y+'" stroke="#8e99a4" stroke-width="2"/><path d="M250 '+(y-5)+' L262 '+y+' L250 '+(y+5)+'" fill="#8e99a4"/></g>';
+        arrowsOut+='<g class="dg-arrow-out"><line x1="470" y1="'+y+'" x2="612" y2="'+y+'" stroke="#7fb98a" stroke-width="2.4"/><path d="M612 '+(y-5)+' L624 '+y+' L612 '+(y+5)+'" fill="#7fb98a"/></g>';
+      }
+      return '<svg viewBox="0 0 640 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Multi-layer filtration mechanism">'
+        + '<defs>'
+        +   '<linearGradient id="dgCake" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c8a265" stop-opacity=".55"/><stop offset="1" stop-color="#c8a265" stop-opacity=".15"/></linearGradient>'
+        +   '<linearGradient id="dgClean" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7fb98a" stop-opacity=".05"/><stop offset="1" stop-color="#7fb98a" stop-opacity=".22"/></linearGradient>'
+        + '</defs>'
+        + '<rect x="0" y="0" width="640" height="470" fill="#14171b"/>'
+        // zones
+        + '<rect x="0" y="0" width="290" height="470" fill="#1d2228"/>'
+        + '<rect x="470" y="0" width="170" height="470" fill="url(#dgClean)"/>'
+        + arrowsIn + dots
+        // dust cake
+        + '<rect class="dg-layer" x="290" y="0" width="40" height="470" fill="url(#dgCake)"/>'
+        // filter media multi-layers
+        + '<rect class="dg-layer" x="330" y="0" width="46" height="470" fill="#e0e2e5" opacity=".92"/>'
+        + '<rect class="dg-layer" x="376" y="0" width="46" height="470" fill="#cdd2d8" opacity=".92"/>'
+        + '<rect class="dg-layer" x="422" y="0" width="48" height="470" fill="#aeb6bf" opacity=".92"/>'
+        // fiber texture
+        + (function(){var f="";for(var k=0;k<60;k++){var x=332+(k*7)%134, y=10+(k*61)%450, len=14+(k%3)*8, rot=(k%2?20:-24);f+='<line x1="'+x+'" y1="'+y+'" x2="'+(x+len*Math.cos(rot*Math.PI/180)).toFixed(1)+'" y2="'+(y+len*Math.sin(rot*Math.PI/180)).toFixed(1)+'" stroke="#8e99a4" stroke-width="1" opacity=".5"/>';}return f;})()
+        + arrowsOut
+        // labels
+        + '<g font-family="Sora,sans-serif" font-weight="600">'
+        +   '<text x="20" y="450" fill="#8e99a4" font-size="17">Dirty gas + dust</text>'
+        +   '<text x="300" y="28" fill="#c8a265" font-size="15" transform="rotate(90 300 28)">Dust cake</text>'
+        +   '<text x="352" y="30" fill="#4a5c6a" font-size="14" transform="rotate(90 352 30)">Filter media layers</text>'
+        +   '<text x="498" y="450" fill="#7fb98a" font-size="17">Clean gas</text>'
+        + '</g>'
+        + '</svg>';
+    }
+  };
 
   /* ---------- helpers ---------- */
   function escA(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -857,22 +937,22 @@ const SLIDES = [
     return html+'</div>';
   }
 
-  function bFigure(a){ return '<figure class="figure r"><img loading="lazy" src="'+a[0]+'" alt=""/>'+(a[1]?'<figcaption>'+a[1]+'</figcaption>':'')+'</figure>'; }
+  function bFigure(a){ return '<figure class="figure r"><img src="'+a[0]+'" alt=""/>'+(a[1]?'<figcaption>'+a[1]+'</figcaption>':'')+'</figure>'; }
   function bFigGrid(items){
     var html='<div class="figs c2">';
-    items.forEach(function(s){ html+='<figure class="figure r" style="aspect-ratio:4/3"><img loading="lazy" src="'+s+'" alt=""/></figure>'; });
+    items.forEach(function(s){ html+='<figure class="figure r" style="aspect-ratio:4/3"><img src="'+s+'" alt=""/></figure>'; });
     return html+'</div>';
   }
   function bFig(o){
     var cls = "figure r" + (o.mode==="contain" ? " contain" : "");
     var ar = o.ar || (o.mode==="contain" ? "4/3" : "16/10");
-    return '<figure class="'+cls+'" style="aspect-ratio:'+ar+'"><img loading="lazy" src="'+o.src+'" alt=""/>'
+    return '<figure class="'+cls+'" style="aspect-ratio:'+ar+'"><img src="'+o.src+'" alt=""/>'
          + (o.cap?'<figcaption>'+o.cap+'</figcaption>':'') + '</figure>';
   }
   function bFigs(o){
     var ar=o.ar||"3/2", fc="figure r"+(o.mode==="contain"?" contain":"");
     var html='<div class="figs c'+(o.cols||2)+'">';
-    o.srcs.forEach(function(s){ html+='<figure class="'+fc+'" style="aspect-ratio:'+ar+'"><img loading="lazy" src="'+s+'" alt=""/></figure>'; });
+    o.srcs.forEach(function(s){ html+='<figure class="'+fc+'" style="aspect-ratio:'+ar+'"><img src="'+s+'" alt=""/></figure>'; });
     return html+'</div>';
   }
   function bSplit(o){
@@ -880,6 +960,20 @@ const SLIDES = [
     return '<div class="cols '+ratio+'" style="gap:'+(o.gap||"38px")+'">'
       + '<div class="col">'+o.cols[0].map(renderBlock).join("")+'</div>'
       + '<div class="col">'+o.cols[1].map(renderBlock).join("")+'</div></div>';
+  }
+  function bDiagram(kind, cap){
+    var svg = DIAGRAMS[kind] ? DIAGRAMS[kind]() : "";
+    return '<figure class="figure diagram r" style="aspect-ratio:'+(kind==="filtration"?"16/11":"16/10")+'">'
+         + svg + (cap?'<figcaption>'+cap+'</figcaption>':'') + '</figure>';
+  }
+  function bBeforeAfter(o){
+    return '<div class="bafter">'
+      + '<figure class="figure r" style="aspect-ratio:4/3"><img src="'+o.before+'" alt=""/>'
+      +   '<span class="batag old">'+(o.bl||"Before")+'</span></figure>'
+      + '<div class="baarrow r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>'
+      + '<figure class="figure r" style="aspect-ratio:4/3"><img src="'+o.after+'" alt=""/>'
+      +   '<span class="batag new">'+(o.al||"After")+'</span></figure>'
+      + '</div>';
   }
 
   function renderBlock(b){
@@ -902,6 +996,8 @@ const SLIDES = [
     if(b.fig)         return bFig(b.fig);
     if(b.figs)        return bFigs(b.figs);
     if(b.split)       return bSplit(b);
+    if(b.diagram)     return bDiagram(b.diagram, b.cap);
+    if(b.beforeAfter) return bBeforeAfter(b.beforeAfter);
     return "";
   }
 
@@ -946,7 +1042,7 @@ const SLIDES = [
   }
 
   function renderChapter(s){
-    return '<div class="cbg"><img loading="lazy" src="'+s.bg+'" alt=""/></div>'
+    return '<div class="cbg"><img src="'+s.bg+'" alt=""/></div>'
       + '<div class="inner"><div class="bignum">'+s.n+'</div>'
       + '<div class="ctext"><div class="ck r">'+s.kicker+'</div>'
       + '<h2 class="split">'+s.title+'</h2>'
@@ -971,7 +1067,7 @@ const SLIDES = [
 
   function renderMap(s){
     var html=head(s)+'<div class="body"><div class="mwrap"><div class="frame r">'
-        +'<img loading="lazy" src="'+s.img+'" alt="De-AirTech global project map"/>';
+        +'<img src="'+s.img+'" alt="De-AirTech global project map"/>';
     s.markers.forEach(function(m){ html+='<span class="marker" style="left:'+m[0]+'%;top:'+m[1]+'%"></span>'; });
     html+='</div><div class="mside">'+bStats(s.stats,"c1");
     html+='<div class="badges">';
@@ -984,7 +1080,7 @@ const SLIDES = [
     var html=head(s)+'<div class="body"><div class="cols r5545"><div class="col">'
         + bLead(s.lead)
         + '<div class="pgrid">';
-    s.logos.forEach(function(l){ html+='<div class="plogo r"><img loading="lazy" src="assets/img/'+l+'" alt=""/></div>'; });
+    s.logos.forEach(function(l){ html+='<div class="plogo r"><img src="assets/img/'+l+'" alt=""/></div>'; });
     html+='</div></div><div class="col">'
         + bLabel("Partnership Benefits")
         + bList(s.benefits)
@@ -994,8 +1090,8 @@ const SLIDES = [
   }
 
   function renderContact(s){
-    var html='<div class="cbg"><img loading="lazy" src="'+s.bg+'" alt=""/></div><div class="inner">'
-        + (s.corp?'<div class="corp center r"><img loading="lazy" src="'+s.corp+'" alt="De-AirTech 艾霆环保"/></div>':'')
+    var html='<div class="cbg"><img src="'+s.bg+'" alt=""/></div><div class="inner">'
+        + (s.corp?'<div class="corp center r"><img src="'+s.corp+'" alt="De-AirTech 艾霆环保"/></div>':'')
         + '<div class="ck r">'+s.kicker+'</div><h2 class="split">'+s.title+'</h2>'
         + '<div class="cmsg r">'+s.msg+'</div><div class="cinfo">';
     s.info.forEach(function(c){ html+='<div class="ci r"><div class="cl">'+c[0]+'</div><div class="cv">'+c[1]+'</div></div>'; });

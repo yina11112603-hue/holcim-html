@@ -12,6 +12,50 @@
   var REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var DUR = REDUCE ? 0.001 : 1;
 
+  /* ---------- inline SVG diagrams (on-brand, vector) ---------- */
+  var DIAGRAMS = {
+    // Multi-layer filtration mechanism: dirty gas → dust cake → media layers → clean gas
+    filtration: function(){
+      var dots="";
+      for(var i=0;i<26;i++){
+        var cy=44+((i*53)%430), cx=70+((i*37)%150), r=2+(i%3);
+        dots+='<circle class="dg-dust" cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#c8a265" opacity="'+(0.5+(i%4)*0.12)+'"/>';
+      }
+      var arrowsIn="", arrowsOut="";
+      for(var a=0;a<5;a++){ var y=70+a*92;
+        arrowsIn +='<g class="dg-arrow-in" opacity="0.9"><line x1="30" y1="'+y+'" x2="250" y2="'+y+'" stroke="#8e99a4" stroke-width="2"/><path d="M250 '+(y-5)+' L262 '+y+' L250 '+(y+5)+'" fill="#8e99a4"/></g>';
+        arrowsOut+='<g class="dg-arrow-out"><line x1="470" y1="'+y+'" x2="612" y2="'+y+'" stroke="#7fb98a" stroke-width="2.4"/><path d="M612 '+(y-5)+' L624 '+y+' L612 '+(y+5)+'" fill="#7fb98a"/></g>';
+      }
+      return '<svg viewBox="0 0 640 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Multi-layer filtration mechanism">'
+        + '<defs>'
+        +   '<linearGradient id="dgCake" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c8a265" stop-opacity=".55"/><stop offset="1" stop-color="#c8a265" stop-opacity=".15"/></linearGradient>'
+        +   '<linearGradient id="dgClean" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7fb98a" stop-opacity=".05"/><stop offset="1" stop-color="#7fb98a" stop-opacity=".22"/></linearGradient>'
+        + '</defs>'
+        + '<rect x="0" y="0" width="640" height="470" fill="#14171b"/>'
+        // zones
+        + '<rect x="0" y="0" width="290" height="470" fill="#1d2228"/>'
+        + '<rect x="470" y="0" width="170" height="470" fill="url(#dgClean)"/>'
+        + arrowsIn + dots
+        // dust cake
+        + '<rect class="dg-layer" x="290" y="0" width="40" height="470" fill="url(#dgCake)"/>'
+        // filter media multi-layers
+        + '<rect class="dg-layer" x="330" y="0" width="46" height="470" fill="#e0e2e5" opacity=".92"/>'
+        + '<rect class="dg-layer" x="376" y="0" width="46" height="470" fill="#cdd2d8" opacity=".92"/>'
+        + '<rect class="dg-layer" x="422" y="0" width="48" height="470" fill="#aeb6bf" opacity=".92"/>'
+        // fiber texture
+        + (function(){var f="";for(var k=0;k<60;k++){var x=332+(k*7)%134, y=10+(k*61)%450, len=14+(k%3)*8, rot=(k%2?20:-24);f+='<line x1="'+x+'" y1="'+y+'" x2="'+(x+len*Math.cos(rot*Math.PI/180)).toFixed(1)+'" y2="'+(y+len*Math.sin(rot*Math.PI/180)).toFixed(1)+'" stroke="#8e99a4" stroke-width="1" opacity=".5"/>';}return f;})()
+        + arrowsOut
+        // labels
+        + '<g font-family="Sora,sans-serif" font-weight="600">'
+        +   '<text x="20" y="450" fill="#8e99a4" font-size="17">Dirty gas + dust</text>'
+        +   '<text x="300" y="28" fill="#c8a265" font-size="15" transform="rotate(90 300 28)">Dust cake</text>'
+        +   '<text x="352" y="30" fill="#4a5c6a" font-size="14" transform="rotate(90 352 30)">Filter media layers</text>'
+        +   '<text x="498" y="450" fill="#7fb98a" font-size="17">Clean gas</text>'
+        + '</g>'
+        + '</svg>';
+    }
+  };
+
   /* ---------- helpers ---------- */
   function escA(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
   function fmt(v, dec, comma){
@@ -91,22 +135,22 @@
     return html+'</div>';
   }
 
-  function bFigure(a){ return '<figure class="figure r"><img loading="lazy" src="'+a[0]+'" alt=""/>'+(a[1]?'<figcaption>'+a[1]+'</figcaption>':'')+'</figure>'; }
+  function bFigure(a){ return '<figure class="figure r"><img src="'+a[0]+'" alt=""/>'+(a[1]?'<figcaption>'+a[1]+'</figcaption>':'')+'</figure>'; }
   function bFigGrid(items){
     var html='<div class="figs c2">';
-    items.forEach(function(s){ html+='<figure class="figure r" style="aspect-ratio:4/3"><img loading="lazy" src="'+s+'" alt=""/></figure>'; });
+    items.forEach(function(s){ html+='<figure class="figure r" style="aspect-ratio:4/3"><img src="'+s+'" alt=""/></figure>'; });
     return html+'</div>';
   }
   function bFig(o){
     var cls = "figure r" + (o.mode==="contain" ? " contain" : "");
     var ar = o.ar || (o.mode==="contain" ? "4/3" : "16/10");
-    return '<figure class="'+cls+'" style="aspect-ratio:'+ar+'"><img loading="lazy" src="'+o.src+'" alt=""/>'
+    return '<figure class="'+cls+'" style="aspect-ratio:'+ar+'"><img src="'+o.src+'" alt=""/>'
          + (o.cap?'<figcaption>'+o.cap+'</figcaption>':'') + '</figure>';
   }
   function bFigs(o){
     var ar=o.ar||"3/2", fc="figure r"+(o.mode==="contain"?" contain":"");
     var html='<div class="figs c'+(o.cols||2)+'">';
-    o.srcs.forEach(function(s){ html+='<figure class="'+fc+'" style="aspect-ratio:'+ar+'"><img loading="lazy" src="'+s+'" alt=""/></figure>'; });
+    o.srcs.forEach(function(s){ html+='<figure class="'+fc+'" style="aspect-ratio:'+ar+'"><img src="'+s+'" alt=""/></figure>'; });
     return html+'</div>';
   }
   function bSplit(o){
@@ -114,6 +158,20 @@
     return '<div class="cols '+ratio+'" style="gap:'+(o.gap||"38px")+'">'
       + '<div class="col">'+o.cols[0].map(renderBlock).join("")+'</div>'
       + '<div class="col">'+o.cols[1].map(renderBlock).join("")+'</div></div>';
+  }
+  function bDiagram(kind, cap){
+    var svg = DIAGRAMS[kind] ? DIAGRAMS[kind]() : "";
+    return '<figure class="figure diagram r" style="aspect-ratio:'+(kind==="filtration"?"16/11":"16/10")+'">'
+         + svg + (cap?'<figcaption>'+cap+'</figcaption>':'') + '</figure>';
+  }
+  function bBeforeAfter(o){
+    return '<div class="bafter">'
+      + '<figure class="figure r" style="aspect-ratio:4/3"><img src="'+o.before+'" alt=""/>'
+      +   '<span class="batag old">'+(o.bl||"Before")+'</span></figure>'
+      + '<div class="baarrow r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>'
+      + '<figure class="figure r" style="aspect-ratio:4/3"><img src="'+o.after+'" alt=""/>'
+      +   '<span class="batag new">'+(o.al||"After")+'</span></figure>'
+      + '</div>';
   }
 
   function renderBlock(b){
@@ -136,6 +194,8 @@
     if(b.fig)         return bFig(b.fig);
     if(b.figs)        return bFigs(b.figs);
     if(b.split)       return bSplit(b);
+    if(b.diagram)     return bDiagram(b.diagram, b.cap);
+    if(b.beforeAfter) return bBeforeAfter(b.beforeAfter);
     return "";
   }
 
@@ -180,7 +240,7 @@
   }
 
   function renderChapter(s){
-    return '<div class="cbg"><img loading="lazy" src="'+s.bg+'" alt=""/></div>'
+    return '<div class="cbg"><img src="'+s.bg+'" alt=""/></div>'
       + '<div class="inner"><div class="bignum">'+s.n+'</div>'
       + '<div class="ctext"><div class="ck r">'+s.kicker+'</div>'
       + '<h2 class="split">'+s.title+'</h2>'
@@ -205,7 +265,7 @@
 
   function renderMap(s){
     var html=head(s)+'<div class="body"><div class="mwrap"><div class="frame r">'
-        +'<img loading="lazy" src="'+s.img+'" alt="De-AirTech global project map"/>';
+        +'<img src="'+s.img+'" alt="De-AirTech global project map"/>';
     s.markers.forEach(function(m){ html+='<span class="marker" style="left:'+m[0]+'%;top:'+m[1]+'%"></span>'; });
     html+='</div><div class="mside">'+bStats(s.stats,"c1");
     html+='<div class="badges">';
@@ -218,7 +278,7 @@
     var html=head(s)+'<div class="body"><div class="cols r5545"><div class="col">'
         + bLead(s.lead)
         + '<div class="pgrid">';
-    s.logos.forEach(function(l){ html+='<div class="plogo r"><img loading="lazy" src="assets/img/'+l+'" alt=""/></div>'; });
+    s.logos.forEach(function(l){ html+='<div class="plogo r"><img src="assets/img/'+l+'" alt=""/></div>'; });
     html+='</div></div><div class="col">'
         + bLabel("Partnership Benefits")
         + bList(s.benefits)
@@ -228,8 +288,8 @@
   }
 
   function renderContact(s){
-    var html='<div class="cbg"><img loading="lazy" src="'+s.bg+'" alt=""/></div><div class="inner">'
-        + (s.corp?'<div class="corp center r"><img loading="lazy" src="'+s.corp+'" alt="De-AirTech 艾霆环保"/></div>':'')
+    var html='<div class="cbg"><img src="'+s.bg+'" alt=""/></div><div class="inner">'
+        + (s.corp?'<div class="corp center r"><img src="'+s.corp+'" alt="De-AirTech 艾霆环保"/></div>':'')
         + '<div class="ck r">'+s.kicker+'</div><h2 class="split">'+s.title+'</h2>'
         + '<div class="cmsg r">'+s.msg+'</div><div class="cinfo">';
     s.info.forEach(function(c){ html+='<div class="ci r"><div class="cl">'+c[0]+'</div><div class="cv">'+c[1]+'</div></div>'; });
