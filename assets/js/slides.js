@@ -368,8 +368,9 @@ const SLIDES = [
     ], cls:"c3"}
   ],
   side:[
-    {beforeAfter:{before:IMG+"esp_old.jpg", after:IMG+"esp_new.jpg",
-      bl:"Before — old ESP", al:"After — heat exchanger + bag filter"}},
+    {label:"Project Cases"},
+    {figs:{srcs:[IMG+"image28.jpg",IMG+"image29.jpg"], cols:2, ar:"4/3",
+      caps:["ESP conversion · process line","ESP conversion · new bag filter"]}},
     {stats:[ {p:"<",n:"30",u:" mg/Nm³",l:"Emission after conversion"},{n:"15",u:"+",l:"Conversions delivered"} ], cls:"c2"}
   ]},
 
@@ -388,7 +389,7 @@ const SLIDES = [
       [ {label:"Case Reference · Lafarge (clinker cooler / kiln + raw mill)"},
         {stats:[ {n:"230→<30",u:" mg/Nm³",l:"Emission reduced"},{n:"30→8",u:" /yr",l:"Annual shutdowns"},
                  {n:"8",u:" mo",l:"Project payback"},{n:"16",u:" days",l:"Shut-down to start-up"} ], cls:"c2 sm"} ],
-      [ {fig:{src:IMG+"esp_erect.jpg", ar:"5/4", cap:"On-site erection during kiln shut-down"}} ]
+      [ {fig:{src:IMG+"hoisting.jpg", ar:"4/3", cap:"Module hoisting on-site during kiln shut-down"}} ]
     ]}
   ]},
 

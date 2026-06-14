@@ -1,5 +1,4 @@
 $env:PATH = 'C:\Program Files\nodejs\;' + $env:PATH
-Set-Location 'E:\工作\De-AirTech\Company Info\上海艾霆介绍\2026 改版\Holcim-HTML'
 git add .
 git commit -m "update"
 git push

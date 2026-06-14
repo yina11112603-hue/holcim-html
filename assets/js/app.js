@@ -148,9 +148,9 @@
          + (o.cap?'<figcaption>'+o.cap+'</figcaption>':'') + '</figure>';
   }
   function bFigs(o){
-    var ar=o.ar||"3/2", fc="figure r"+(o.mode==="contain"?" contain":"");
+    var ar=o.ar||"3/2", fc="figure r"+(o.mode==="contain"?" contain":""), caps=o.caps||[];
     var html='<div class="figs c'+(o.cols||2)+'">';
-    o.srcs.forEach(function(s){ html+='<figure class="'+fc+'" style="aspect-ratio:'+ar+'"><img src="'+s+'" alt=""/></figure>'; });
+    o.srcs.forEach(function(s,i){ html+='<figure class="'+fc+'" style="aspect-ratio:'+ar+'"><img src="'+s+'" alt=""/>'+(caps[i]?'<figcaption>'+caps[i]+'</figcaption>':'')+'</figure>'; });
     return html+'</div>';
   }
   function bSplit(o){
@@ -310,15 +310,44 @@
   });
   document.getElementById("ctot").textContent=String(SLIDES.length).padStart(2,"0");
   document.getElementById("brandlogo").src="assets/img/image2.png";
+  var tl=document.getElementById("toclogo"); if(tl) tl.src="assets/img/image2.png";
 
   var chapters=[]; SLIDES.forEach(function(s,i){ if(s.type==="chapter") chapters.push(i); });
 
-  /* ---------- scale to fit (any aspect ratio) ---------- */
-  function fit(){
-    var s=Math.min(window.innerWidth/1920, window.innerHeight/1080);
-    stage.style.setProperty("--s", s);
+  /* ---------- build left table-of-contents ---------- */
+  function navLabel(s){
+    if(s.type==="cover") return "Cover";
+    if(s.type==="toc") return "Contents";
+    if(s.type==="chapter") return s.n+" · "+s.title;
+    if(s.type==="contact") return "Thank You";
+    if(s.type==="map") return s.title;
+    if(s.type==="partners") return s.title;
+    return s.title;
   }
-  window.addEventListener("resize", fit); fit();
+  var tocListEl=document.getElementById("toc-list");
+  if(tocListEl){
+    SLIDES.forEach(function(s,i){
+      var li=document.createElement("li");
+      li.className="toc-item type-"+s.type; li.dataset.i=i;
+      li.innerHTML='<span class="ti-n">'+String(i+1).padStart(2,"0")+'</span><span class="ti-t">'+navLabel(s)+'</span>';
+      li.addEventListener("click", function(){ go(i); });
+      tocListEl.appendChild(li);
+    });
+  }
+
+  /* ---------- scale to fit (any aspect ratio; offset for open TOC) ---------- */
+  function tocVisible(){ return document.body.classList.contains("toc-open"); }
+  function fit(){
+    var W = tocVisible() ? (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--toc-w"))||272) : 0;
+    var availW = Math.max(320, window.innerWidth - W);
+    var s = Math.min(availW/1920, window.innerHeight/1080);
+    stage.style.setProperty("--s", s);
+    stage.style.left = (W + availW/2) + "px";
+  }
+  window.addEventListener("resize", fit);
+  // default: show TOC (windowed). fit() runs after this.
+  document.body.classList.add("toc-open");
+  fit();
 
   /* ---------- ambient particles ---------- */
   (function(){
@@ -454,6 +483,11 @@
     document.getElementById("cnum").textContent=String(idx+1).padStart(2,"0");
     document.getElementById("chiptag").textContent=s.chip||"De‑AirTech";
     document.getElementById("pbar").style.width=(idx/(els.length-1)*100)+"%";
+    if(tocListEl){
+      var items=tocListEl.children;
+      for(var k=0;k<items.length;k++) items[k].classList.toggle("cur", k===idx);
+      if(items[idx]) items[idx].scrollIntoView({block:"nearest"});
+    }
   }
 
   function go(n){
@@ -488,6 +522,20 @@
     try{ var p=rq.call(el); if(p&&p.catch) p.catch(function(){}); }catch(e){}
   }
 
+  /* ---------- TOC sidebar: manual toggle + auto-hide in fullscreen ---------- */
+  var tocPref=true;  // user preference (shown when windowed)
+  function isFs(){ return !!(document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement); }
+  function applyToc(){
+    var fs=isFs();
+    document.body.classList.toggle("is-fs", fs);
+    document.body.classList.toggle("toc-open", tocPref && !fs);
+    fit();
+  }
+  var tocTgl=document.getElementById("toctgl");
+  if(tocTgl) tocTgl.addEventListener("click", function(e){ e.stopPropagation(); tocPref=!tocPref; applyToc(); });
+  document.addEventListener("fullscreenchange", applyToc);
+  document.addEventListener("webkitfullscreenchange", applyToc);
+
   /* ---------- input ---------- */
   document.getElementById("next").addEventListener("click",function(e){ e.stopPropagation(); next(); });
   document.getElementById("prev").addEventListener("click",function(e){ e.stopPropagation(); prev(); });
@@ -509,8 +557,9 @@
 
   // click left/right to navigate (ignore HUD buttons & TOC items)
   deck.addEventListener("click",function(e){
-    if(e.target.closest(".nav")||e.target.closest(".titem")) return;
-    var x=e.clientX/window.innerWidth;
+    if(e.target.closest(".nav")||e.target.closest(".titem")||e.target.closest("#toc")||e.target.closest("#toctgl")) return;
+    var W = tocVisible() ? (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--toc-w"))||272) : 0;
+    var x=(e.clientX - W)/Math.max(1,(window.innerWidth - W));
     if(x>0.5) next(); else prev();
   });
 
