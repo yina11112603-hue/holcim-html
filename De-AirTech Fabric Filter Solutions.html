@@ -433,9 +433,10 @@ const SLIDES = [
 { type:"content", kicker:"Company Profile", title:"About De-AirTech", chip:"Company Profile",
   layout:"r6040",
   main:[
+    {lead:["Our Heritage",["Founded in Shanghai in 2019, De-AirTech was created by senior engineers and managers formerly with Hamon (Belgium) and AAF (USA) — two pioneers of industrial air-pollution control — bringing 20+ years of fabric-filter expertise into a focused, independent company."]]},
     {lead:["Our Mission",["Reducing emissions is a mandatory, complex task for any industry. We deliver air quality solutions that comply with present and future regulations while respecting each plant's process, schedule and budget."]]},
     {lead:["Core Expertise",["Full experience across design, engineering, construction, start-up, operation and maintenance of Air Quality Systems — backed by in-house flow-dynamic models and computer simulation."]]},
-    {lead:["Global Application",["Countless in-situ emission control systems let us confidently apply our technology to any requirement, across diverse industries worldwide."]]}
+    {lead:["Global Application",["In-situ emission-control systems across diverse industries worldwide let us confidently apply our technology to any requirement."]]}
   ],
   side:[
     {label:"Company Strengths"},
@@ -753,23 +754,24 @@ const SLIDES = [
 
 /* 29 — ESP CONVERSION */
 { type:"content", kicker:"Service & Support", title:"ESP to FF Conversion", chip:"Service & Support",
-  layout:"r5545",
-  main:[
-    {lead:["Convert, Don't Rebuild",[
-      "When regulations tighten or capacity must grow, an existing Electrostatic Precipitator (ESP) can be converted to a fabric filter — reusing the old casing, hoppers, supports and dust-conveying system.",
-      "DAT and our Dingjie workshop have delivered many ESP conversions in China and overseas, on supply-only (EP) or full turnkey (EPC) basis."]]},
-    {cardsTitle:"Basic Design Ideas"},
-    {cards:[
-      ["Low Capital Cost","Reuse old casing, hoppers & dust-conveying systems — minimal new structure."],
-      ["Tailored Each Case","Every ESP is studied thoroughly to best serve the plant's specific needs."],
-      ["Higher Kiln Output","Low, stable filter ΔP and reliable performance lift kiln production."]
-    ], cls:"c3"}
-  ],
-  side:[
-    {label:"Project Cases"},
-    {figs:{srcs:[IMG+"image28.jpg",IMG+"image29.jpg"], cols:2, ar:"4/3",
-      caps:["ESP conversion · process line","ESP conversion · new bag filter"]}},
-    {stats:[ {p:"<",n:"30",u:" mg/Nm³",l:"Emission after conversion"},{n:"15",u:"+",l:"Conversions delivered"} ], cls:"c2"}
+  layout:"rows",
+  rows:[
+    {split:true, ratio:"r5050", gap:"40px", cols:[
+      [ {label:"Conversion in progress → completed"},
+        {beforeAfter:{before:IMG+"conv_during.jpg", after:IMG+"conv_done.jpg",
+          bl:"During conversion", al:"Completed filter"}} ],
+      [ {label:"Old ESP → new fabric filter"},
+        {beforeAfter:{before:IMG+"esp_old.jpg", after:IMG+"esp_new.jpg",
+          bl:"Before — old ESP", al:"After — bag filter"}} ]
+    ]},
+    {split:true, ratio:"r6040", gap:"40px", cols:[
+      [ {lead:["Convert, Don't Rebuild",[
+          "An existing Electrostatic Precipitator (ESP) can be converted to a fabric filter — reusing the old casing, hoppers, supports and dust-conveying system, on supply (EP) or turnkey (EPC) basis."]]},
+        {stats:[ {p:"<",n:"10",u:" mg/Nm³",l:"Emission after conversion"},{n:"15",u:"+",l:"Conversions delivered"} ], cls:"c2"} ],
+      [ {label:"More project references — delivered by De-AirTech"},
+        {figs:{srcs:[IMG+"image28.jpg",IMG+"image29.jpg"], cols:2, ar:"4/3",
+          caps:["Cement-plant ESP conversion","New fabric filter installed"]}} ]
+    ]}
   ]},
 
 /* 30 — ESP CONVERSION · PROCESS & RESULTS */
@@ -785,7 +787,7 @@ const SLIDES = [
     ]},
     {split:true, ratio:"r6040", gap:"34px", cols:[
       [ {label:"Case Reference · Lafarge (clinker cooler / kiln + raw mill)"},
-        {stats:[ {n:"230→<30",u:" mg/Nm³",l:"Emission reduced"},{n:"30→8",u:" /yr",l:"Annual shutdowns"},
+        {stats:[ {n:"230→<10",u:" mg/Nm³",l:"Emission reduced"},{n:"30→8",u:" /yr",l:"Annual shutdowns"},
                  {n:"8",u:" mo",l:"Project payback"},{n:"16",u:" days",l:"Shut-down to start-up"} ], cls:"c2 sm"} ],
       [ {fig:{src:IMG+"hoisting.jpg", ar:"4/3", cap:"Module hoisting on-site during kiln shut-down"}} ]
     ]}
